@@ -149,12 +149,11 @@ const FormSection = ({
             onChange={changeHandler}
             onFocus={focusHandler}
           />
-          {jobTouch[value]?.jobCategory &&
-            jobError?.jobCategory && (
-              <span className="block text-red-600 text-xs font-bold pt-2">
-                {jobError?.jobCategory}
-              </span>
-            )}
+          {jobTouch[value]?.jobCategory && jobError?.jobCategory && (
+            <span className="block text-red-600 text-xs font-bold pt-2">
+              {jobError?.jobCategory}
+            </span>
+          )}
         </div>
       </div>{" "}
       <div className="flex flex-row justify-start items-start w-72 h-16 gap-x-1">

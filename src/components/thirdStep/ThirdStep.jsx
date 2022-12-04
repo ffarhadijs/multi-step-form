@@ -23,7 +23,9 @@ export default function ThirdStep({
   jobTouch,
   setJobTouch,
   handleBack,
-  setActiveStep,jobError,setJobError,
+  setActiveStep,
+  jobError,
+  setJobError,
 }) {
   const setValueHandler = (value) => {
     setValue(value);
@@ -31,7 +33,6 @@ export default function ThirdStep({
   const ThirdStepNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
-  console.log(tabs);
   return (
     <div className="w-full py-20">
       <div className="flex flex-row justify-between items-center">
