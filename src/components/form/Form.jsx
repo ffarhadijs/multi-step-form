@@ -11,8 +11,7 @@ import ConfirmStep from "../confirmStep/ConfirmStep";
 const steps = ["اقدامات ثبتی شرکت", "مدارک ثبتی شرکت", "شغل", "تأیید"];
 
 export default function Form() {
-  const [allData,setAllData]=useState({}) //all inputs value
-  console.log(allData)
+  const [allInputsValue, setAllInputsValue] = useState({}); //all inputs value
   const [activeStep, setActiveStep] = useState(0);
   const [formValues, setFormValues] = useState({
     companyName: "",
@@ -101,7 +100,7 @@ export default function Form() {
       secondDoc: false,
     };
     setJobTouch([...jobTouch, newJobTouch]);
-    
+
     const newTab = {
       value: tabIndex,
       label: `رسته شغلی${tabIndex + 1}`,
@@ -129,78 +128,70 @@ export default function Form() {
         })}
       </Stepper>
       {activeStep === steps.length - 1 ? (
-        <React.Fragment>
-          <ConfirmStep
-          allData={allData}
-          setAllData={setAllData}
-            touch={touch}
-            setTouch={setTouch}
-            error={error}
-            setError={setError}
-            handleBack={handleBack}
-            formValues={formValues}
-            setFormValues={setFormValues}
-            jobType={jobType}
-          />
-        </React.Fragment>
+        <ConfirmStep
+          allInputsValue={allInputsValue}
+          setAllInputsValue={setAllInputsValue}
+          touch={touch}
+          setTouch={setTouch}
+          error={error}
+          setError={setError}
+          handleBack={handleBack}
+          formValues={formValues}
+          setFormValues={setFormValues}
+          jobType={jobType}
+        />
       ) : activeStep === 0 ? (
-        <React.Fragment>
-          <FirstStep
-            touch={touch}
-            setTouch={setTouch}
-            error={error}
-            setError={setError}
-            date={date}
-            setDate={setDate}
-            setActiveStep={setActiveStep}
-            formValues={formValues}
-            setFormValues={setFormValues}
-            handleBack={handleBack}
-          />
-        </React.Fragment>
+        <FirstStep
+          touch={touch}
+          setTouch={setTouch}
+          error={error}
+          setError={setError}
+          date={date}
+          setDate={setDate}
+          setActiveStep={setActiveStep}
+          formValues={formValues}
+          setFormValues={setFormValues}
+          handleBack={handleBack}
+        />
       ) : activeStep === 1 ? (
-        <React.Fragment>
-          <SecondStep
-            size={size}
-            setSize={setSize}
-            touch={touch}
-            setTouch={setTouch}
-            error={error}
-            setError={setError}
-            setActiveStep={setActiveStep}
-            formValues={formValues}
-            setFormValues={setFormValues}
-            handleBack={handleBack}
-          />
-        </React.Fragment>
+        <SecondStep
+          size={size}
+          setSize={setSize}
+          touch={touch}
+          setTouch={setTouch}
+          error={error}
+          setError={setError}
+          setActiveStep={setActiveStep}
+          formValues={formValues}
+          setFormValues={setFormValues}
+          handleBack={handleBack}
+        />
       ) : activeStep === 2 ? (
-        <React.Fragment>
-          <ThirdStep
-            addHandler={addHandler}
-            touch={touch}
-            setTouch={setTouch}
-            error={error}
-            setError={setError}
-            formValues={formValues}
-            setFormValues={setFormValues}
-            value={value}
-            setValue={setValue}
-            tabs={tabs}
-            setTabs={setTabs}
-            tabPanels={tabPanels}
-            setTabPanels={setTabPanels}
-            tabIndex={tabIndex}
-            setTabIndex={setTabIndex}
-            jobType={jobType}
-            setJobType={setJobType}
-            jobTouch={jobTouch}
-            setJobTouch={setJobTouch}
-            handleBack={handleBack}
-            setActiveStep={setActiveStep}
-            jobError={jobError}
-            setJobError={setJobError}
-          />
-        </React.Fragment>
+        <ThirdStep
+          addHandler={addHandler}
+          touch={touch}
+          setTouch={setTouch}
+          error={error}
+          setError={setError}
+          formValues={formValues}
+          setFormValues={setFormValues}
+          value={value}
+          setValue={setValue}
+          tabs={tabs}
+          setTabs={setTabs}
+          tabPanels={tabPanels}
+          setTabPanels={setTabPanels}
+          tabIndex={tabIndex}
+          setTabIndex={setTabIndex}
+          jobType={jobType}
+          setJobType={setJobType}
+          jobTouch={jobTouch}
+          setJobTouch={setJobTouch}
+          handleBack={handleBack}
+          setActiveStep={setActiveStep}
+          jobError={jobError}
+          setJobError={setJobError}
+        />
       ) : null}
     </div>
   );
