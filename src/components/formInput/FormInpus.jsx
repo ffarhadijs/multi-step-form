@@ -25,14 +25,70 @@ const TextInput = styled(TextField)({
 const FormInpus = ({
   error,
   touch,
+  setTouch,
   formValues,
   label,
   name,
   type,
-  changeHandler,
-  focusHandler,
   date,
+  setDate,
+  setFormValues,
+  tabValue,
+  jobDate,
+  setJobDate,
+  jobType,
+  setJobType,
+  jobDateId,
 }) => {
+  const changeHandler = (e) => {
+    if (name === "jobCategory") {
+      const jobTypeId = jobType?.findIndex((job) => job.id === tabValue);
+      const job = { ...jobType[jobTypeId] };
+      job.jobCategory = e.target.value;
+
+      const updatedJobs = [...jobType];
+      updatedJobs[jobTypeId] = job;
+      setJobType(updatedJobs);
+    } else {
+      setFormValues({ ...formValues, [e.target.name]: e.target.value });
+    }
+  };
+
+  const changeDateHandler = (newDate) => {
+    if (name === "jobCatDate") {
+      const jDate = { ...jobDateId };
+      jDate.date = newDate;
+      const updatedJobsDate = [...jobDate];
+      updatedJobsDate[tabValue] = jDate;
+      setJobDate(updatedJobsDate);
+
+      const jalaliDate = newDate?.toLocaleDateString("fa-IR");
+      const jobTypeId = jobType.findIndex((job) => job.id === tabValue);
+      const job = { ...jobType[jobTypeId] };
+      job.jobCatDate = jalaliDate;
+      const updatedJobs = [...jobType];
+      updatedJobs[jobTypeId] = job;
+      setJobType(updatedJobs);
+    } else {
+      setDate(newDate);
+      setFormValues({
+        ...formValues,
+        regDate: newDate?.toLocaleDateString("fa-IR"),
+      });
+    }
+  };
+  const focusHandler = (e) => {
+    if (name === "jobCategory" || name === "jobCatDate") {
+      const jobTypeId = touch.findIndex((job) => job.id === tabValue);
+      const job = { ...touch[jobTypeId] };
+      job[name] = true;
+      const updatedJobs = [...touch];
+      updatedJobs[jobTypeId] = job;
+      setTouch(updatedJobs);
+    } else {
+      setTouch({ ...touch, [e.target.name]: true });
+    }
+  };
   return (
     <div className="flex flex-row justify-start items-start w-full h-16 gap-x-1">
       <label
@@ -60,7 +116,7 @@ const FormInpus = ({
             ))}
           </select>
         )}
-        {name !== "regCity" && name !== "regDate" && (
+        {name !== "regCity" && name !== "regDate" && name !== "jobCatDate" && (
           <input
             id={name}
             className={`w-full hover:border hover:border-gray-400 rounded-md outline-none border border-gray-400 px-3 py-2 text-sm focus:border-blue-400 focus:border-2 ${
@@ -68,17 +124,21 @@ const FormInpus = ({
             }`}
             name={name}
             type={type}
-            value={formValues[name]}
+            value={
+              name === "jobCategory"
+                ? jobType[tabValue][name]
+                : formValues[name]
+            }
             onChange={changeHandler}
             onFocus={focusHandler}
           />
         )}
-        {name === "regDate" && (
+        {type === "date" && (
           <LocalizationProvider dateAdapter={AdapterJalali}>
             <DatePicker
               mask="____/__/__"
-              value={date}
-              onChange={changeHandler}
+              value={name === "jobCatDate" ? jobDateId.date : date}
+              onChange={changeDateHandler}
               renderInput={(params) => (
                 <TextInput
                   type={type}
@@ -97,7 +157,6 @@ const FormInpus = ({
             />
           </LocalizationProvider>
         )}
-
         {touch[name] && error[name] && (
           <span className="block text-red-600 text-xs font-bold pt-2">
             {error[name]}
