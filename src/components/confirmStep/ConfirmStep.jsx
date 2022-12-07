@@ -55,7 +55,6 @@ const ConfirmStep = ({
     }
     setAllInputsValue({ formValues, jobType });
   };
-  console.log(jobType);
   return (
     <div className="w-full my-20">
       <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 gap-y-6 md:gap-y-12 w-full h-auto">
