@@ -1,6 +1,14 @@
-import React, { useEffect } from "react";
+import { Box, Modal } from "@mui/material";
+import React, { useState } from "react";
 import { forwardRef } from "react";
 import { FaTrashAlt } from "react-icons/fa";
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+};
 
 const ImageUploader = forwardRef(
   (
@@ -10,22 +18,70 @@ const ImageUploader = forwardRef(
       label,
       name,
       value,
+      tabValue,
       touch,
+      setTouch,
       error,
-      changeHandler,
-      focusHandler,
-      setOpen,
-      setModalFile,
+      jobType,
+      setJobType,
+      size,
+      setSize,
     },
     ref
   ) => {
+    const [open, setOpen] = useState(false);
+    const [modalFile, setModalFile] = useState(null);
     const modalHandler = (file) => {
       setOpen(true);
       setModalFile(file);
     };
-    const imgRemoveHandler = () => {
-      setFormValues({ ...formValues, [formValues[name]]: null });
-      ref.current.value = null;
+    const handleClose = () => {
+      setOpen(false);
+      setModalFile(null);
+    };
+    const imgRemoveHandler = (e) => {
+      if (name === "firstDoc" || name === "secondDoc") {
+        const jobTypeId = jobType.findIndex((job) => job.id === tabValue);
+        const job = { ...jobType[jobTypeId] };
+        job[e.target.name] = null;
+        const updatedJobs = [...jobType];
+        updatedJobs[jobTypeId] = job;
+        setJobType(updatedJobs);
+        ref.current.value = null;
+      } else {
+        setFormValues({ ...formValues, [formValues[name]]: null });
+        ref.current.value = null;
+      }
+    };
+    const focusHandler = (e) => {
+      if (name === "firstDoc" || name === "secondDoc") {
+        const jobTypeId = touch.findIndex((job) => job.id === tabValue);
+        const job = { ...touch[jobTypeId] };
+        job[e.target.name] = true;
+        const updatedJobs = [...touch];
+        updatedJobs[jobTypeId] = job;
+        setTouch(updatedJobs);
+      } else {
+        setTouch({ ...touch, [name]: true });
+      }
+    };
+
+    const changeHandler = (e) => {
+      if (name === "firstDoc" || name === "secondDoc") {
+        const jobTypeId = jobType.findIndex((job) => job.id === tabValue);
+        const job = { ...jobType[jobTypeId] };
+        job[e.target.name] = e.target.files;
+
+        const updatedJobs = [...jobType];
+        updatedJobs[jobTypeId] = job;
+        setJobType(updatedJobs);
+      } else {
+        setFormValues({
+          ...formValues,
+          [name]: e.target.files,
+        });
+        setSize({ ...size, [name]: e.target.files[0]?.size });
+      }
     };
     return (
       <div className="flex flex-col items-start justify-start gap-y-4 w-full border rounded-md border-gray-400 p-2">
@@ -62,6 +118,14 @@ const ImageUploader = forwardRef(
             {error[name]}
           </span>
         )}
+        <Modal open={open} onClose={handleClose}>
+          <Box sx={style}>
+            <img
+              className="max-w-2xl max-h-[600px] w-[300px] sm:w-[500px] md:w-[600px] h-[350px] sm:h-[450px] md:h-auto"
+              src={modalFile}
+            />
+          </Box>
+        </Modal>
       </div>
     );
   }
