@@ -74,16 +74,21 @@ export default function Form() {
       secondDoc: false,
     },
   ]);
-  const [value, setValue] = useState(0);
-  const [tabs, setTabs] = useState([{ value: 0, label: " رسته شغلی1" }]);
-  const [tabPanels, setTabPanels] = useState([{ value: 0 }]);
+  const [jobDate, setJobDate] = useState([{ id: 0, date: null }]);
+  const [tabValue, setTabValue] = useState(0);
+  const [tabs, setTabs] = useState([{ tabValue: 0, label: " رسته شغلی1" }]);
+  const [tabPanels, setTabPanels] = useState([{ tabValue: 0 }]);
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
-
   const addHandler = () => {
     setTabIndex(tabIndex + 1);
+    const newDate = {
+      id: tabIndex,
+      date: null,
+    };
+    setJobDate([...jobDate, newDate]);
     const newJob = {
       id: tabIndex,
       jobCategory: "",
@@ -102,11 +107,11 @@ export default function Form() {
     setJobTouch([...jobTouch, newJobTouch]);
 
     const newTab = {
-      value: tabIndex,
+      tabValue: tabIndex,
       label: `رسته شغلی${tabIndex + 1}`,
     };
     const newTabPanel = {
-      value: tabIndex,
+      tabValue: tabIndex,
     };
     setTabs([...tabs, newTab]);
     setTabPanels([...tabPanels, newTabPanel]);
@@ -175,8 +180,8 @@ export default function Form() {
           setError={setError}
           formValues={formValues}
           setFormValues={setFormValues}
-          value={value}
-          setValue={setValue}
+          tabValue={tabValue}
+          setTabValue={setTabValue}
           tabs={tabs}
           setTabs={setTabs}
           tabPanels={tabPanels}
@@ -191,6 +196,8 @@ export default function Form() {
           setActiveStep={setActiveStep}
           jobError={jobError}
           setJobError={setJobError}
+          jobDate={jobDate}
+          setJobDate={setJobDate}
         />
       ) : null}
     </div>
