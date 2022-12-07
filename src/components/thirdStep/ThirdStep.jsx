@@ -1,23 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import FormSection from "./FormSection";
 import { Button } from "@mui/material";
 
 export default function ThirdStep({
   addHandler,
-  value,
-  setValue,
+  tabValue,
+  setTabValue,
   tabs,
-  setTabs,
-  tabPanels,
-  setTabPanels,
   tabIndex,
-  setTabIndex,
-  touch,
-  setTouch,
   error,
-  setError,
-  formValues,
-  setFormValues,
   jobType,
   setJobType,
   jobTouch,
@@ -25,10 +16,10 @@ export default function ThirdStep({
   handleBack,
   setActiveStep,
   jobError,
-  setJobError,
+  jobDate,setJobDate
 }) {
-  const setValueHandler = (value) => {
-    setValue(value);
+  const setValueHandler = (tabValue) => {
+    setTabValue(tabValue);
   };
   const ThirdStepNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -39,10 +30,10 @@ export default function ThirdStep({
         <div>
           {tabs.map((item) => (
             <button
-              key={item.value}
-              onClick={() => setValueHandler(item.value)}
+              key={item.tabValue}
+              onClick={() => setValueHandler(item.tabValue)}
               className={`mx-3 pb-2 ${
-                value == item.value && "border-b-2 border-blue-500"
+                tabValue == item.tabValue && "border-b-2 border-blue-500"
               }`}
             >
               {item.label}
@@ -61,25 +52,20 @@ export default function ThirdStep({
       <div className="pt-16">
         {tabs.map((item) => (
           <div
-            key={item.value}
-            className={`${value !== item.value && "hidden"}`}
+            key={item.tabValue}
+            className={`${tabValue !== item.tabValue && "hidden"}`}
           >
             <FormSection
-              value={item.value}
+              tabValue={item.tabValue}
               tabIndex={tabIndex}
-              setTabIndex={setTabIndex}
-              touch={touch}
-              setTouch={setTouch}
               error={error}
-              setError={setError}
-              formValues={formValues}
-              setFormValues={setFormValues}
               jobType={jobType}
               setJobType={setJobType}
               jobTouch={jobTouch}
               setJobTouch={setJobTouch}
               jobError={jobError}
-              setJobError={setJobError}
+              jobDate={jobDate}
+              setJobDate={setJobDate}
             />
           </div>
         ))}
