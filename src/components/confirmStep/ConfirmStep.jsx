@@ -64,10 +64,10 @@ const ConfirmStep = ({
         {jobType?.map((item) => (
           <Fragment key={item.id}>
             {item.jobCategory && (
-              <ShowInputsValue label={"رسته شغلی:"} value={item.jobCategory} />
+              <ShowInputsValue label={`رسته شغلی:`} value={item.jobCategory} />
             )}
             {item.jobCatDate && (
-              <ShowInputsValue label={"تاریخ ثبت:"} value={item.jobCatDate} />
+              <ShowInputsValue label={`تاریخ ثبت:`} value={item.jobCatDate} />
             )}
           </Fragment>
         ))}
