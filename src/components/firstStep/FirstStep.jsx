@@ -30,20 +30,6 @@ const FirstStep = ({
   useEffect(() => {
     setError(validation(formValues));
   }, [formValues]);
-  const changeHandler = (e) => {
-    setFormValues({ ...formValues, [e.target.name]: e.target.value });
-  };
-  const changeDateHandler = (newDate) => {
-    setDate(newDate);
-    setFormValues({
-      ...formValues,
-      regDate: newDate?.toLocaleDateString("fa-IR"),
-    });
-  };
-
-  const focusHandler = (e) => {
-    setTouch({ ...touch, [e.target.name]: true });
-  };
 
   const firstStepNext = () => {
     setTouch({
@@ -62,7 +48,7 @@ const FirstStep = ({
       agent: true,
     });
     // if (!Object.keys(error).length) {
-      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
     // }
   };
 
@@ -72,15 +58,14 @@ const FirstStep = ({
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full h-auto">
           {formInputsList.map((input) => (
             <FormInpus
+              setFormValues={setFormValues}
               date={date}
               key={input.id}
               error={error}
               formValues={formValues}
               touch={touch}
-              changeHandler={
-                input.name === "regDate" ? changeDateHandler : changeHandler
-              }
-              focusHandler={focusHandler}
+              setDate={setDate}
+              setTouch={setTouch}
               {...input}
             />
           ))}
