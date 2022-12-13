@@ -1,6 +1,6 @@
 import React from "react";
 import FormSection from "./FormSection";
-import { Button } from "@mui/material";
+import Button from "../button/Button"
 
 export default function ThirdStep({
   addHandler,
@@ -16,7 +16,8 @@ export default function ThirdStep({
   handleBack,
   setActiveStep,
   jobError,
-  jobDate,setJobDate
+  jobDate,
+  setJobDate,
 }) {
   const setValueHandler = (tabValue) => {
     setTabValue(tabValue);
@@ -41,13 +42,10 @@ export default function ThirdStep({
           ))}
         </div>
         <Button
-          disabled={tabIndex === 3}
+          disable={tabIndex === 3}
           onClick={addHandler}
-          variant={"contained"}
-          sx={{ mr: 2, fontFamily: "vazir" }}
-        >
-          اضافه کردن رسته شغلی
-        </Button>
+          label="اضافه کردن رسته شغلی"
+        />
       </div>
       <div className="pt-16">
         {tabs.map((item) => (
@@ -72,19 +70,13 @@ export default function ThirdStep({
       </div>
       <div className="w-full pt-12 flex flex-row justify-between md:justify-start items-center">
         <Button
-          variant={"contained"}
           onClick={ThirdStepNext}
-          sx={{ mr: 2, fontFamily: "vazir" }}
-        >
-          مرحله بعدی
-        </Button>
-        <Button
-          variant={"contained"}
+          label="مرحله بعدی"
+        />
+         <Button
           onClick={handleBack}
-          sx={{ ml: 2, fontFamily: "vazir" }}
-        >
-          مرحله قبلی
-        </Button>
+          label="مرحله قبلی"
+        />
       </div>
     </div>
   );
