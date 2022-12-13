@@ -1,14 +1,7 @@
-import { Box, Modal } from "@mui/material";
 import React, { useState } from "react";
 import { forwardRef } from "react";
 import { FaTrashAlt } from "react-icons/fa";
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-};
+import Modal from "../modal/Modal";
 
 const ImageUploader = forwardRef(
   (
@@ -31,11 +24,12 @@ const ImageUploader = forwardRef(
   ) => {
     const [open, setOpen] = useState(false);
     const [modalFile, setModalFile] = useState(null);
-    const modalHandler = (file) => {
+
+    const modalHandler = (img) => {
       setOpen(true);
-      setModalFile(file);
+      setModalFile(img);
     };
-    const handleClose = () => {
+    const handleClose = (e) => {
       setOpen(false);
       setModalFile(null);
     };
@@ -43,14 +37,15 @@ const ImageUploader = forwardRef(
       if (name === "firstDoc" || name === "secondDoc") {
         const jobTypeId = jobType.findIndex((job) => job.id === tabValue);
         const job = { ...jobType[jobTypeId] };
-        job[e.target.name] = null;
+        job[name] = null;
         const updatedJobs = [...jobType];
         updatedJobs[jobTypeId] = job;
         setJobType(updatedJobs);
         ref.current.value = null;
       } else {
-        setFormValues({ ...formValues, [formValues[name]]: null });
+        setFormValues({ ...formValues, [name]: null });
         ref.current.value = null;
+        setTouch({ ...touch, [name]: false });
       }
     };
     const focusHandler = (e) => {
@@ -118,14 +113,7 @@ const ImageUploader = forwardRef(
             {error[name]}
           </span>
         )}
-        <Modal open={open} onClose={handleClose}>
-          <Box sx={style}>
-            <img
-              className="max-w-2xl max-h-[600px] w-[300px] sm:w-[500px] md:w-[600px] h-[350px] sm:h-[450px] md:h-auto"
-              src={modalFile}
-            />
-          </Box>
-        </Modal>
+        <Modal img={modalFile} open={open} handleClose={handleClose} />
       </div>
     );
   }
