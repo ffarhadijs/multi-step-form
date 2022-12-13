@@ -4,7 +4,6 @@ module.exports = {
   theme: {
     extend: {
       fontFamily:{
-        iranSans:  "iranSans",
         vazir: 'vazir',
       }
     },
