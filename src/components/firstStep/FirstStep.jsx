@@ -1,8 +1,7 @@
 import { useEffect } from "react";
 import validation from "./validation";
-import Button from "@mui/material/Button";
 import FormInpus from "../formInput/FormInpus";
-
+import Button from "../button/Button";
 const formInputsList = [
   { id: 1, label: "نام شرکت", name: "companyName", type: "text" },
   { id: 2, label: "شناسه ملی", name: "nationalId", type: "number" },
@@ -31,8 +30,10 @@ const FirstStep = ({
     setError(validation(formValues));
   }, [formValues]);
 
-  const firstStepNext = () => {
+  const firstStepNext = (e) => {
+    e.preventDefault();
     setTouch({
+      ...touch,
       companyName: true,
       nationalId: true,
       economicId: true,
@@ -42,14 +43,10 @@ const FirstStep = ({
       job: true,
       CEOName: true,
       CEOLName: true,
-      foundation: true,
-      newspaper: true,
-      nationalCard: true,
-      agent: true,
     });
-    // if (!Object.keys(error).length) {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    // }
+    if (!Object.keys(error).length) {
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    }
   };
 
   return (
@@ -71,21 +68,8 @@ const FirstStep = ({
           ))}
         </div>
         <div className="w-full pt-12 flex flex-row justify-between md:justify-start items-center">
-          <Button
-            onClick={firstStepNext}
-            variant="contained"
-            sx={{ fontFamily: "vazir", mr: 2 }}
-          >
-            مرحله بعدی
-          </Button>
-          <Button
-            disabled
-            color="inherit"
-            onClick={handleBack}
-            sx={{ ml: 2, fontFamily: "vazir" }}
-          >
-            مرحله قبلی
-          </Button>
+          <Button onClick={firstStepNext} label={"مرحله بعدی"} />
+          <Button disable onClick={handleBack} label={"مرحله قبلی"} />
         </div>
       </form>
     </div>
