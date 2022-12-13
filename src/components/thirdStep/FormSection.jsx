@@ -2,8 +2,6 @@ import React, { createRef } from "react";
 import ImageUploader from "../imageUploader/ImageUploader";
 import FormInpus from "../formInput/FormInpus";
 
-
-
 const FormSection = ({
   error,
   jobType,
@@ -12,7 +10,8 @@ const FormSection = ({
   jobTouch,
   setJobTouch,
   jobError,
-  jobDate,setJobDate
+  jobDate,
+  setJobDate,
 }) => {
   const firstDocRef = createRef();
   const secondDocRef = createRef();
