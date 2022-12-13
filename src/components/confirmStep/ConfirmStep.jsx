@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import Button from "../button/Button";
 import React, { Fragment, useEffect } from "react";
 import ImageThumb from "../imageThumb/ImageThumb";
 import ShowInputsValue from "../showInputsValue/ShowInputsValue";
@@ -36,16 +36,16 @@ const ConfirmStep = ({
     { id: 3, label: "تصویر کارت ملی مدیرعامل", src: formValues.nationalCard },
     { id: 4, label: "معرفی نماینده با سربرگ شرکت", src: formValues.agent },
   ];
-  const changeHandler = (e) => {
+  const changeHandler = () => {
     setFormValues({ ...formValues, checkBox: !formValues.checkBox });
   };
-  const focusHandler = (e) => {
+  const focusHandler = () => {
     setTouch({ ...touch, checkBox: true });
   };
   useEffect(() => {
     setError(validation(formValues));
   }, [formValues]);
-  const thirdStepNext = () => {
+  const confirmNext = () => {
     setTouch({
       checkBox: true,
     });
@@ -105,20 +105,8 @@ const ConfirmStep = ({
         )}
       </div>
       <div className="w-full pt-12 flex flex-row justify-between md:justify-start items-center">
-        <Button
-          onClick={thirdStepNext}
-          variant="contained"
-          sx={{ fontFamily: "vazir", mr: 2 }}
-        >
-          تایید
-        </Button>
-        <Button
-          variant="contained"
-          onClick={handleBack}
-          sx={{ ml: 2, fontFamily: "vazir" }}
-        >
-          مرحله قبلی
-        </Button>
+        <Button onClick={confirmNext} label="تایید" />
+        <Button onClick={handleBack} label="مرحله قبلی" />
       </div>
     </div>
   );
