@@ -1,7 +1,6 @@
 import { useEffect, createRef } from "react";
 import validation from "./validation";
-import Button from "@mui/material/Button";
-
+import Button from "../button/Button";
 import ImageUploader from "../imageUploader/ImageUploader";
 
 export default function SecondStep({
@@ -16,12 +15,10 @@ export default function SecondStep({
   setFormValues,
   handleBack,
 }) {
-
   const foundationRef = createRef();
   const newspaperRef = createRef();
   const nationalCardRef = createRef();
   const agentRef = createRef();
-
 
   useEffect(() => {
     setError(validation(formValues, size));
@@ -33,11 +30,10 @@ export default function SecondStep({
       nationalCard: true,
       agent: true,
     });
-    // if (!Object.keys(error).length) {
+    if (!Object.keys(error).length) {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    // }
+    }
   };
-
 
   const imageUploaderList = [
     {
@@ -86,20 +82,8 @@ export default function SecondStep({
         />
       ))}
       <div className="flex flex-row justify-center py-12 md:justify-start items-center">
-        <Button
-          variant={"contained"}
-          sx={{ mr: 2, fontFamily: "vazir" }}
-          onClick={secondStepNext}
-        >
-          مرحله بعدی
-        </Button>
-        <Button
-          variant={"contained"}
-          sx={{ ml: 2, fontFamily: "vazir" }}
-          onClick={handleBack}
-        >
-          مرحله قبلی
-        </Button>
+        <Button onClick={secondStepNext} label="مرحله بعدی" />
+        <Button onClick={handleBack} label="مرحله قبلی" />
       </div>
     </div>
   );
